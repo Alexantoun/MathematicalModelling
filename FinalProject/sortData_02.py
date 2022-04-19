@@ -1,9 +1,9 @@
-from collections import deque
 import pandas as pd
+import xlsxwriter
 from pandas import DataFrame
 import matplotlib.pyplot as plt
-import tkinter as tk
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import seaborn as sns
+import numpy as np
 
 #In range 20-30 degrees, we have 1565
 
@@ -18,8 +18,9 @@ class sensReading:
 
     def print(self):
         print('Number:',self.readNum,'FDOY:',self.FDOY,'Temp:',self.temp,'PA (ppbv):',self.PAppbv,'49C (ppbv):',self._49Cppbv)
-
-def addItemBy49C(sensorData:deque, newNode:sensReading):
+def isNaN(num):
+    return num!=num
+def addItemBy49C(sensorData:list, newNode:sensReading):
     if len(sensorData) != 0:
         if sensorData[-1]._49Cppbv < newNode._49Cppbv:
             sensorData.append(newNode)
@@ -37,12 +38,12 @@ def addItemBy49C(sensorData:deque, newNode:sensReading):
     elif len(sensorData) == 0:
         sensorData.append(newNode)
     
-def additemByTemp(sensorData:deque, newNode:sensReading):
+def additemByTemp(sensorData:list, newNode:sensReading):
     if len(sensorData) != 0:
         if sensorData[-1].temp < newNode.temp:
             sensorData.append(newNode)
         elif newNode.temp < sensorData[0].temp:
-            sensorData.appendleft(newNode)
+            sensorData.insert(0,newNode)
         else:
             x = 0
             while(x+1000 < len(sensorData)) and (sensorData[x+1000].temp <= newNode.temp):
@@ -57,112 +58,97 @@ def additemByTemp(sensorData:deque, newNode:sensReading):
     elif len(sensorData) == 0:
         sensorData.append(newNode)
 
-def sortBins(sensorData:deque, start:int, end:int):
+def sortBins(sensorData:list, start:int, end:int):
     for i in sensorData:
         if i.temp <= end and i.temp >= start:
             i.printNode(i)
         elif i.temp>end:
             break
 
-def scatterByTemp(sensorData:deque, start:int, end:int):
-    x = 0
-    while ( x+100 < len(sensorData)-1 ) and ( sensorData[x+100].temp <= start):
-        x+=100
-    while( x+10 < len(sensorData)-1 ) and ( sensorData[x+10].temp <= start ):
-        x+=10
-    while sensorData[x].temp <start:
-        x += 1
-    PA = list()
-    t49c = list()
-    PA.clear()
-    t49c.clear()
-    lineNum = 1
-    while sensorData[x].temp <= end: # place x and y axis into seperate lists
-        PA.append(sensorData[x].PAppbv)
-        t49c.append(sensorData[x]._49Cppbv)
-        print(lineNum, end=' ')
-        sensorData[x].print()
-        x+=1
-        lineNum+=1
-    plt.scatter(t49c, PA)
+def scatterNoRegression(sensorData:list, start:int, end:int):
+    i = 0
+    while ( i+100 < len(sensorData)-1 ) and ( sensorData[i+100].temp <= start):
+        i+=100
+    while( i+10 < len(sensorData)-1 ) and ( sensorData[i+10].temp <= start ):
+        i+=10
+    while sensorData[i].temp <start:
+        i += 1
+    y = list() #THIS IS THE PA SENSOR
+    x = list() #AND THIS IS THE 49C SENSOR
+    y.clear()
+    x.clear()
+    #lineNum = 1
+    while sensorData[i].temp <= end: # place x and y axis into seperate lists
+        y.append(sensorData[i].PAppbv)
+        x.append(sensorData[i]._49Cppbv)
+        #print(lineNum, end=' ')
+        sensorData[i].print()
+        i+=1
+        #lineNum+=1
+    plt.plot(x, y, 'o', alpha=0.2)
     plt.title('49C vs PA')
     plt.xlabel('49C ppbv', fontsize=14)
     plt.ylabel('PA ppbv', fontsize=14)
     plt.grid(False)
-    print(len(PA))
+    print(len(y))
     plt.show()
-    
-
-def scatterBy49C(sensorData:deque, start:int, end:int):
-    x = 0
-    while ( x+100 < len(sensorData)-1 ) and ( sensorData[x+100]._49Cppbv < start ):
-        x+=100
-    while( x+10 < len(sensorData)-1 ) and ( sensorData[x+10]._49Cppbv < start ):
-       x+=10
-    while sensorData[x]._49Cppbv < start:
-       x += 1
-    PA = list()
-    t49c = list()
-    PA.clear()
-    t49c.clear()
-    while sensorData[x]._49Cppbv < end: # place x and y axis into seperate lists
-        PA.append(sensorData[x].PAppbv)
-        t49c.append(sensorData[x]._49Cppbv)
-        sensorData[x].print()
-        x+=1
-    plt.scatter(t49c, PA)
-    plt.title('49C vs PA')
-    plt.xlabel('49C ppbv', fontsize=14)
-    plt.ylabel('PA ppbv', fontsize=14)
-    plt.grid(False)
-    plt.show()
-    tkPlot = input("Do you want a TKinter Plot?(y/Y): ")
-    if tkPlot == 'y' or tkPlot=='Y':
-        data = {'PA':PA, '49C':t49c}
-        df = DataFrame(data,columns=['PA','49C'])
-        root = tk.Tk()
-        figure = plt.Figure(figsize=(10,8), dpi=100)
-        ax = figure.add_subplot(111)
-        ax.scatter(df['PA'],df['49C'],color='g')
-        scatter = FigureCanvasTkAgg(figure, root) 
-        scatter.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
-        ax.legend(['49C']) 
-        ax.set_xlabel('PA')
-        ax.set_title('PA Vs. 49C')
-        root.mainloop()
-    print('Done')
-    
 
 df = pd.read_csv('TempBins_01.csv')
-sensorData = deque()
+sensorData = list()
 readData = list()
 sensorData.clear()
 progress = 0
-numReadings = 42546
-for i in range (0, numReadings):
+numOfData = 42546
+numOfValidReadings = 0
+for i in range (0, numOfData):
     if i%4300 == 0:
         progress+=10
         print(progress,'%')
     readData = df.iloc[i]
+    if isNaN(readData[2]) or isNaN(readData[1]):
+        continue
     newNode = sensReading()
     newNode.FDOY = readData[0]
     newNode._49Cppbv = readData[1]
     newNode.PAppbv = readData[2]
     newNode.temp = readData[5]
     newNode.readNum = i+1
-    #addItemBy49C(sensorData, newNode)
     additemByTemp(sensorData, newNode)
-    #newNode.print()
+    numOfValidReadings+=1
 
-for i in range(0, len(sensorData)-1):
-    sensorData[i].print()
-print("Done")
-print(len(sensorData))
+
+print('Making new Spreadsheet')
+outputName = 'SortedData.xlsx'
+workbook = xlsxwriter.Workbook(outputName)
+worksheet = workbook.add_worksheet()
+bold = workbook.add_format({'bold': 1})
+
+row = 1
+col = 0
+worksheet.write('A1', 'Number',bold)
+worksheet.write('B1', 'FDOY',bold)
+worksheet.write('C1', 'Temp-C',bold)
+worksheet.write('D1', 'PA ppbv',bold)
+worksheet.write('E1', '49C ppbv',bold)
+progress = 0
+
+for i in range (1, numOfValidReadings):
+    if i%4300 == 0:
+        progress+=10
+        print(progress,'%')
+    worksheet.write_number(i, 0, i)
+    worksheet.write_number(i, 1, sensorData[i].FDOY)
+    worksheet.write_number(i, 2, sensorData[i].temp)
+    worksheet.write_number(i, 3, sensorData[i].PAppbv)
+    worksheet.write_number(i, 4, sensorData[i]._49Cppbv)
+workbook.close()
 
 cont = 'c'
-while(cont != 'q' or cont != 'Q'):
-    print('Enter the plot range')
+while(cont != 'q' and cont != 'Q'):
+    print('Enter a temperature range')
     start = int(input())
     end = int(input())
-    scatterByTemp(sensorData, start, end)
-    cont = (input('Press Q to quit'))
+    scatterNoRegression(sensorData, start, end)
+    print('Quit = Q, Continue = c')
+    cont = input()
+print("Goodbye!")
