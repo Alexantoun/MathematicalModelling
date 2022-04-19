@@ -2,7 +2,6 @@ import pandas as pd
 import xlsxwriter
 from pandas import DataFrame
 import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
 
 #In range 20-30 degrees, we have 1565
@@ -77,20 +76,32 @@ def scatterNoRegression(sensorData:list, start:int, end:int):
     x = list() #AND THIS IS THE 49C SENSOR
     y.clear()
     x.clear()
+    y_new = list()
+    x_new = list()
+    y_new.clear()
+    x_new.clear()
     #lineNum = 1
-    while sensorData[i].temp <= end: # place x and y axis into seperate lists
+    while sensorData[i].temp <= end and i < numOfValidReadings: # place x and y axis into seperate lists
         y.append(sensorData[i].PAppbv)
         x.append(sensorData[i]._49Cppbv)
+        y_new.append((sensorData[i].PAppbv))
+        x_new.append((sensorData[i]._49Cppbv))
         #print(lineNum, end=' ')
         sensorData[i].print()
         i+=1
         #lineNum+=1
-    plt.plot(x, y, 'o', alpha=0.2)
+    y_new = np.array(y_new)
+    x_new = np.array(x_new)
+    #plt.plot(x, y, 'o', alpha=0.1)
+    m,b = np.polyfit(x_new, y_new, 1)
+    plt.scatter(x,y, alpha=0.1)
+    plt.plot(x_new, m*x_new + b, color='red')
+    plt.text(1, 17, 'Slope = '+ '{:.2f}'.format(m), size=14)
     plt.title('49C vs PA')
     plt.xlabel('49C ppbv', fontsize=14)
     plt.ylabel('PA ppbv', fontsize=14)
-    plt.grid(False)
-    print(len(y))
+    #plt.grid(False)
+    #print(len(y))
     plt.show()
 
 df = pd.read_csv('TempBins_01.csv')
