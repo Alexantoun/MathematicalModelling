@@ -53,5 +53,9 @@ be inserted
 Tuesday, 5th of April:
 Code is running much faster now and have managed to make it print data within a specified range
 
-Tuesday, 26th of April: Journal entry dates were fixed, slope vs temperature was graphed and it seems that it can be modeled with 5 piecewise linear functions. This is a possible major breakthrough for the research this project is based on because it might be a reliable long-term calibration scheme.
-The fourth line (purple) displays interesting behavior as there is high error in that range and there is no reason the slopes should increase, yet the trend is strong. The first three lines will be tested as a calibration scheme since temperatures above 40 C are rare, while the last two lines will be researched by Dr. Ayers this summer. If there is time, a temperature-dependant adsobption model will be compared to these findings. SN
+Tuesday, 26th of April: Journal entry dates were fixed, slope vs temperature was graphed and it seems that it can be modeled with 5 piecewise linear functions. 
+This is a possible major breakthrough for the research this project is based on because it might be a reliable long-term calibration scheme.
+The fourth line (purple) displays interesting behavior as there is high error in that range and there is no reason the slopes should increase, 
+yet the trend is strong. The first three lines will be tested as a calibration scheme since temperatures above 40 C are rare, 
+while the last two lines will be researched by Dr. Ayers this summer. If there is time, 
+a temperature-dependant adsobption model will be compared to these findings. SN
