@@ -1,5 +1,4 @@
 Journal of the process between Steven Nixon and myself (Alex Antoun) 
-Hello
 
 Tuesday, 8th of March:
 Started spitballing ideas of a research topic that we can model. Have come up with two potential 
@@ -39,17 +38,20 @@ Task for Alex:
 Task for Steve:
 	Formalize the argyument that the 49C is the more reliable and we can make the assunption that the S900 is the one prone to failure 
 
-Monday 21st of April, to Monday 28th of April : Spring Break
+Monday 21st of March, to Monday 28th of April : Spring Break
 
-Tuesday, 29th of April:
+Tuesday, 29th of March:
 Began to finalise the abstract for our research, and I had begun to program the sorting program. It 
 takes such a long time, its trying to read ~42,000 sensor reads.
 
-Thursday, 31st of April:
+Thursday, 31st of March:
 Still programming the code in python. Decided to use a Deque in python and sort the queue as it reads
 data. Still pretty slow. By realising its slow because every read, the program loops through the existing
 list of data, I made it jump by 100's then by 10's until in hones in on the area where new data should
 be inserted
 
-Tuesday, 5th of May:
+Tuesday, 5th of April:
 Code is running much faster now and have managed to make it print data within a specified range
+
+Tuesday, 26th of April: Journal entry dates were fixed, slope vs temperature was graphed and it seems that it can be modeled with 5 piecewise linear functions. This is a possible major breakthrough for the research this project is based on because it might be a reliable long-term calibration scheme.
+The fourth line (purple) displays interesting behavior as there is high error in that range and there is no reason the slopes should increase, yet the trend is strong. The first three lines will be tested as a calibration scheme since temperatures above 40 C are rare, while the last two lines will be researched by Dr. Ayers this summer. If there is time, a temperature-dependant adsobption model will be compared to these findings. SN
