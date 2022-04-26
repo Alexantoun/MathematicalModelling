@@ -1,0 +1,55 @@
+Journal of the process between Steven Nixon and myself (Alex Antoun) 
+
+Tuesday, 8th of March:
+Started spitballing ideas of a research topic that we can model. Have come up with two potential 
+candidates one being a kaleidoscope and the other the exploration of how particles stick to
+surfaces based on the temperature. Both of us agreed to come up with an extra idea of the coming
+Thursday. In one week we'll try to come up with a very bare bones proof of concept to test
+our ability to pull this off
+
+Thursday, 10th of March: 
+	picked 3 ideas and will spend the weekend scrutinizing and coming up with a proof of 
+concept to see if we can actually pull of our ideas. First Idea is the stickyness of an ozone 
+particle based on the temperature of the atmosphere. Second idea is exploring famine of a nation 
+suffering heavy sanctions with few trading partners and not too much sunlight. Finally a forest
+fire simulation that we're keeping on the shelf for now as we know we coulb absolutely pull it off
+
+Tuesday, 15th of March:
+	Decided to model why Ozone sensor readings appear to degrade with temperature.
+	Cheap sensor is S900 Aeroqual
+	Good sensor is 49C thermo environmental Ozone analyzer
+
+	Some Questions we considered:
+	ASSUMPTION 1:
+	The good sensor (49C thermo environmental Ozone analyzer) can be concluded as such because...
+		There exists previous research comapring it to another similar quality sensor.
+	
+	ASSUMPTION 2:
+	Another assumption is that data degrades WITH temperature because of Ozone stickyness...
+		Must figure this one out
+
+Thursday, 17th of March:
+	Wrote an abstract, however we did not make an practical progress to constructing a model as of yet
+this means we will need to update the abstract as we move through. 
+
+Task for Alex: 
+	Split data into 1deg(C) temperature bins
+
+Task for Steve:
+	Formalize the argyument that the 49C is the more reliable and we can make the assunption that the S900 is the one prone to failure 
+
+Monday 21st of April, to Monday 28th of April : Spring Break
+
+Tuesday, 29th of April:
+Began to finalise the abstract for our research, and I had begun to program the sorting program. It 
+takes such a long time, its trying to read ~42,000 sensor reads.
+
+Thursday, 31st of April:
+Still programming the code in python. Decided to use a Deque in python and sort the queue as it reads
+data. Still pretty slow. By realising its slow because every read, the program loops through the existing
+list of data, I made it jump by 100's then by 10's until in hones in on the area where new data should
+be inserted
+
+Tuesday, 5th of May:
+Code is running much faster now and have managed to make it print data within a specified range
+

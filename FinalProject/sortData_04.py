@@ -19,15 +19,14 @@ class sensReading:
     def print(self):
         print('Number:',self.readNum,'FDOY:',self.FDOY,'Temp:',self.temp,'PA (ppbv):',self.PAppbv,'49C (ppbv):',self._49Cppbv)
 
-#Define slopes seperates into 1 deg bins and calculates the slope  of regression. 
-#The calculation of the slope takes also include readings whose temperature is at the upper bound of the bin
+#defineSlopes() seperates data into 1 deg bins and calculates the slope  of regression. 
+#The calculation of the slope also include readings whose temperature is at the upper and lower bounds of the bin
 def defineSlopes(sensorData:list):
     startRange = -3
     endRange = startRange+1 #calculate correlation with 1deg bins
     maxTemp = 48
     startingIndex = 0
     while(endRange < maxTemp):
-        print('working...')
         i = startingIndex
         y_new = list()
         x_new = list()
@@ -41,13 +40,13 @@ def defineSlopes(sensorData:list):
         x_new = np.array(x_new)
         m,b = np.polyfit(x_new,y_new,1)
         i= startingIndex
-        while sensorData[i].temp <= endRange and i < numOfValidReadings:
+        while sensorData[i].temp <= endRange and i < numOfValidReadings:    #Every node in the degree bin will have the same regression slope
             sensorData[i].slope = m
             i+=1
-        startingIndex = i
+        startingIndex = i   #Move onto the next bin
         startRange = endRange
         endRange+=1
-        while(sensorData[startingIndex].temp >= startRange):
+        while(sensorData[startingIndex].temp >= startRange): #Go back to begginning of the temperature range
             startingIndex-=1
 
 def isNaN(num):
@@ -133,25 +132,21 @@ for i in range (0, numOfData):
     additemByTemp(sensorData, newNode)
     numOfValidReadings+=1
 
-c=input('Do you want to work out slopes? y/Y: ')
-if c == 'y' or c== 'Y':
-    defineSlopes(sensorData)
+#Start creating the excel spreadsheet with the data 
+defineSlopes(sensorData)
 print('Making new Spreadsheet')
 outputName = 'SortedData.xlsx'
-workbook = xlsxwriter.Workbook(outputName)
+workbook = xlsxwriter.Workbook(outputName)      #Below here is formating 
 worksheet = workbook.add_worksheet()
 bold = workbook.add_format({'bold': 1})
-
-row = 1
-col = 0
 worksheet.write('A1', 'Number',bold)
 worksheet.write('B1', 'FDOY',bold)
 worksheet.write('C1', 'Temp-C',bold)
 worksheet.write('D1', 'PA ppbv',bold)
 worksheet.write('E1', '49C ppbv',bold)
 worksheet.write('F1', 'Slope', bold)
+#Writing data into excel sheet
 progress = 0
-
 for i in range (1, numOfValidReadings):
     if i%4300 == 0:
         progress+=10
@@ -164,6 +159,7 @@ for i in range (1, numOfValidReadings):
     worksheet.write_number(i, 5, sensorData[i].slope)
 workbook.close()
 
+#Loop to check plots
 cont = 'c'
 while(cont != 'q' and cont != 'Q'):
     print('Enter a temperature range from -3.8 to 47.7')
