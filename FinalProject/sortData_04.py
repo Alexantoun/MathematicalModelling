@@ -48,6 +48,7 @@ def defineSlopes(sensorData:list):
         endRange+=1
         while(sensorData[startingIndex].temp >= startRange): #Go back to begginning of the temperature range
             startingIndex-=1
+        startingIndex+=1
 
 def isNaN(num):
     return num!=num
