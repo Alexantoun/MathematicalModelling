@@ -4,8 +4,6 @@ from pandas import DataFrame
 import matplotlib.pyplot as plt
 import numpy as np
 
-#In range 20-30 degrees, we have 1565
-
 class sensReading:
     def __init__(self):
         #-999 used a sentinel value to flag error
@@ -15,6 +13,7 @@ class sensReading:
         self._49Cppbv = -999 #This is the more accurate sensor
         self.slope = -999
         self.readNum = -999
+        self.PA_Slope = -999
 
     def print(self):
         print('Number:',self.readNum,'FDOY:',self.FDOY,'Temp:',self.temp,'PA (ppbv):',self.PAppbv,'49C (ppbv):',self._49Cppbv)
@@ -52,7 +51,21 @@ def defineSlopes(sensorData:list):
 
 def isNaN(num):
     return num!=num
-    
+
+def PA_vs_Slope(sensorNode:sensReading): #Check if values of sensorNode are changing
+    for x in sensorNode:
+        currTemp = x.temp
+        if currTemp.temp >= -3.889 and currTemp<= 25.556:
+            x.PA_Slope = (0.001*x.temp) + 1.448
+        elif currTemp.temp > 25.556 and currTemp.temp <= 32.778:
+            x.PA_Slope = (-0.0197*currTemp) + 2.0461
+        elif currTemp.temp > 32.778 and currTemp.temp <= 40.556:
+            x.PA_Slope = (-0.087*currTemp) + 4.2472
+        elif currTemp.temp > 40.556 and currTemp.temp <= 44.444:
+            x.PA_Slope = (0.0256*currTemp) - 0.1814
+        elif currTemp.temp > 44.444:
+            x.PA_Slope = (-0.367*currTemp) + 17.357
+
 def additemByTemp(sensorData:list, newNode:sensReading):
     if len(sensorData) != 0:
         if sensorData[-1].temp < newNode.temp:
@@ -130,6 +143,7 @@ for i in range (0, numOfData):
     newNode.PAppbv = readData[2]
     newNode.temp = readData[5]
     newNode.readNum = i+1
+    PA_vs_Slope(newNode)
     additemByTemp(sensorData, newNode)
     numOfValidReadings+=1
 
@@ -146,6 +160,7 @@ worksheet.write('C1', 'Temp-C',bold)
 worksheet.write('D1', 'PA ppbv',bold)
 worksheet.write('E1', '49C ppbv',bold)
 worksheet.write('F1', 'Slope', bold)
+worksheet.write('G1', 'PA vs Slope', bold)
 #Writing data into excel sheet
 progress = 0
 for i in range (1, numOfValidReadings):
@@ -158,6 +173,8 @@ for i in range (1, numOfValidReadings):
     worksheet.write_number(i, 3, sensorData[i].PAppbv)
     worksheet.write_number(i, 4, sensorData[i]._49Cppbv)
     worksheet.write_number(i, 5, sensorData[i].slope)
+    worksheet.write_number(i, 6, sensorData[i].PA_Slope)
+print('100%')
 workbook.close()
 
 #Loop to check plots
