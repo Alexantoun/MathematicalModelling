@@ -52,19 +52,18 @@ def defineSlopes(sensorData:list):
 def isNaN(num):
     return num!=num
 
-def PA_vs_Slope(sensorNode:sensReading): #Check if values of sensorNode are changing
-    for x in sensorNode:
-        currTemp = x.temp
-        if currTemp.temp >= -3.889 and currTemp<= 25.556:
-            x.PA_Slope = (0.001*x.temp) + 1.448
-        elif currTemp.temp > 25.556 and currTemp.temp <= 32.778:
-            x.PA_Slope = (-0.0197*currTemp) + 2.0461
-        elif currTemp.temp > 32.778 and currTemp.temp <= 40.556:
-            x.PA_Slope = (-0.087*currTemp) + 4.2472
-        elif currTemp.temp > 40.556 and currTemp.temp <= 44.444:
-            x.PA_Slope = (0.0256*currTemp) - 0.1814
-        elif currTemp.temp > 44.444:
-            x.PA_Slope = (-0.367*currTemp) + 17.357
+def PA_vs_Slope(x:sensReading): #Check if values of sensorNode are changing
+    currTemp = x.temp
+    if currTemp >= -3.889 and currTemp<= 25.556:
+        x.PA_Slope = x.PAppbv/((0.0061*x.temp) + 1.3717)
+    elif currTemp > 25.556 and currTemp <= 32.778:
+        x.PA_Slope = x.PAppbv/((-0.0197*currTemp) + 2.0461)
+    elif currTemp > 32.778 and currTemp <= 40.556:
+        x.PA_Slope = x.PAppbv/((-0.087*currTemp) + 4.2472)
+    elif currTemp > 40.556 and currTemp < 44.444:
+        x.PA_Slope = x.PAppbv/((0.0323*currTemp) - 0.459)
+    elif currTemp >= 44.444:
+        x.PA_Slope = x.PAppbv/((-0.3053*currTemp) + 14.53)
 
 def additemByTemp(sensorData:list, newNode:sensReading):
     if len(sensorData) != 0:
@@ -160,7 +159,7 @@ worksheet.write('C1', 'Temp-C',bold)
 worksheet.write('D1', 'PA ppbv',bold)
 worksheet.write('E1', '49C ppbv',bold)
 worksheet.write('F1', 'Slope', bold)
-worksheet.write('G1', 'PA vs Slope', bold)
+worksheet.write('G1', 'PA Calibrated', bold)
 #Writing data into excel sheet
 progress = 0
 for i in range (1, numOfValidReadings):
