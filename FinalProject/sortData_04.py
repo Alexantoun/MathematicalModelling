@@ -85,7 +85,7 @@ def additemByTemp(sensorData:list, newNode:sensReading):
     elif len(sensorData) == 0:
         sensorData.append(newNode)
 
-def scatterRegression(sensorData:list, start:int, end:int):
+def scatterRegression(sensorData:list, start:float, end:float):
     i = 0
     while ( i+100 < len(sensorData)-1 ) and ( sensorData[i+100].temp <= start):
         i+=100
@@ -101,25 +101,20 @@ def scatterRegression(sensorData:list, start:int, end:int):
     x_new = list()
     y_new.clear()
     x_new.clear()
-    #lineNum = 1
     while sensorData[i].temp <= end and i < numOfValidReadings: # place x and y axis into seperate lists
         y.append(sensorData[i].PAppbv)
         x.append(sensorData[i]._49Cppbv)
         y_new.append(sensorData[i].PAppbv)
         x_new.append(sensorData[i]._49Cppbv)
         i+=1
-        #lineNum+=1
     y_new = np.array(y_new)
     x_new = np.array(x_new)
-    #plt.plot(x, y, 'o', alpha=0.1)
     m,b = np.polyfit(x_new, y_new, 1)
     plt.scatter(x,y, alpha=0.1)
     plt.plot(x_new, m*x_new + b, color='red')
-    plt.title('49C vs PA     Slope = '+ '{:.2f}'.format(m))
+    plt.title(f'49C vs PA.   Slope = {round(m,2)},   Temperature Range = {start}-{end}')
     plt.xlabel('49C ppbv', fontsize=14)
     plt.ylabel('PA ppbv', fontsize=14)
-    #plt.grid(False)
-    #print(len(y))
     plt.show()
 
 df = pd.read_csv('TempBins_01.csv')
@@ -180,8 +175,8 @@ workbook.close()
 cont = 'c'
 while(cont != 'q' and cont != 'Q'):
     print('Enter a temperature range from -3.8 to 47.7')
-    start = int(input())
-    end = int(input())
+    start = float(input())
+    end = float(input())
     if end <= start or start <-3.8 or end > 47.7:
         print("Bad input!")
     else:

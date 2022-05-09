@@ -1,7 +1,0 @@
-pip install tkinter
-pip install matplotlib
-pip install pandas
-
-
-\Python\Python39\python.exe -m pip install --upgrade pip
-Do above first
