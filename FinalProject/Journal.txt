@@ -12,7 +12,7 @@ Thursday, 10th of March:
 concept to see if we can actually pull of our ideas. First Idea is the stickyness of an ozone 
 particle based on the temperature of the atmosphere. Second idea is exploring famine of a nation 
 suffering heavy sanctions with few trading partners and not too much sunlight. Finally a forest
-fire simulation that we're keeping on the shelf for now as we know we coulb absolutely pull it off
+fire simulation that we're keeping on the shelf for now as we know we could absolutely pull it off
 
 Tuesday, 15th of March:
 	Decided to model why Ozone sensor readings appear to degrade with temperature.
