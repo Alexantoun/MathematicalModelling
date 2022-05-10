@@ -59,3 +59,6 @@ The fourth line (purple) displays interesting behavior as there is high error in
 yet the trend is strong. The first three lines will be tested as a calibration scheme since temperatures above 40 C are rare, 
 while the last two lines will be researched by Dr. Ayers this summer. If there is time, 
 a temperature-dependant adsobption model will be compared to these findings. SN
+
+Sunday, the 8th of May: 
+Presentation was finished and cleaned up, and data was checked for errors. Results for the calibration scheme seem to be a net positive, however the slope does become worse at times. 
