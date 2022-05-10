@@ -36,7 +36,7 @@ Task for Alex:
 	Split data into 1deg(C) temperature bins
 
 Task for Steve:
-	Formalize the argyument that the 49C is the more reliable and we can make the assunption that the S900 is the one prone to failure 
+	Formalize the argument that the 49C is the more reliable and we can make the assunption that the S900 is the one prone to failure 
 
 Monday 21st of March, to Monday 28th of April : Spring Break
 
@@ -61,7 +61,7 @@ while the last two lines will be researched by Dr. Ayers this summer. If there i
 a temperature-dependant adsobption model will be compared to these findings. SN
 
 Friday, the 29th of April (Written May 9,2022): Presentation was mostly created, minus parts from the program. Adsorption is not realistic to look into as all the 
-temperature-dependant equations involve too many experimental constants, and there is not a clear means of obtaining them. The calibration scheme is mostly done, however it needs to be checked for errors. SN
+temperature-dependant equations involve too many experimental constants, and there is not a clear means of obtaining them. The calibration scheme is mostly done, however it needs to be checked for errors. Slope vs temperature graph color scheme was changed to be more intuitive SN.
 
 Sunday, the 8th of May (Written May 9, 2022): 
-Presentation was finished and cleaned up, and data was checked for errors. Results for the calibration scheme seem to be a net positive, however the slope does become worse at times. SN
+Presentation was finished and cleaned up, and data was checked for errors. Results for the calibration scheme seem to be a net positive, however the slope does become worse at times. That said, the R^2 seems to consistently increase by about 0.1 with few exceptions. SN
