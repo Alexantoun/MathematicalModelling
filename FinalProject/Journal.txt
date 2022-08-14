@@ -12,7 +12,7 @@ Thursday, 10th of March:
 concept to see if we can actually pull of our ideas. First Idea is the stickyness of an ozone 
 particle based on the temperature of the atmosphere. Second idea is exploring famine of a nation 
 suffering heavy sanctions with few trading partners and not too much sunlight. Finally a forest
-fire simulation that we're keeping on the shelf for now as we know we coulb absolutely pull it off
+fire simulation that we're keeping on the shelf for now as we know we could absolutely pull it off
 
 Tuesday, 15th of March:
 	Decided to model why Ozone sensor readings appear to degrade with temperature.
@@ -36,7 +36,7 @@ Task for Alex:
 	Split data into 1deg(C) temperature bins
 
 Task for Steve:
-	Formalize the argyument that the 49C is the more reliable and we can make the assunption that the S900 is the one prone to failure 
+	Formalize the argument that the 49C is the more reliable and we can make the assunption that the S900 is the one prone to failure 
 
 Monday 21st of March, to Monday 28th of April : Spring Break
 
@@ -59,3 +59,14 @@ The fourth line (purple) displays interesting behavior as there is high error in
 yet the trend is strong. The first three lines will be tested as a calibration scheme since temperatures above 40 C are rare, 
 while the last two lines will be researched by Dr. Ayers this summer. If there is time, 
 a temperature-dependant adsobption model will be compared to these findings. SN
+
+Friday, the 29th of April (Written May 9,2022): Presentation was mostly created, minus parts from the program. 
+Adsorption is not realistic to look into as all the 
+temperature-dependant equations involve too many experimental constants, and there is not a clear means of obtaining them. 
+The calibration scheme is mostly done, however it needs to be checked for errors. 
+Slope vs temperature graph color scheme was changed to be more intuitive SN.
+
+Sunday, the 8th of May (Written May 9, 2022): 
+Presentation was finished and cleaned up, and data was checked for errors.
+Results for the calibration scheme seem to be a net positive, however the slope does become worse at times. 
+That said, the R^2 seems to consistently increase by about 0.1 with few exceptions. SN
