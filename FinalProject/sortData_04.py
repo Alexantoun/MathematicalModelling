@@ -110,13 +110,13 @@ def scatterRegression(sensorData:list, start:float, end:float):
     y_new = np.array(y_new)
     x_new = np.array(x_new)
     m,b = np.polyfit(x_new, y_new, 1)
-    plt.scatter(x,y, alpha=0.1)
+    plt.scatter(x,y, alpha=0.075)
     plt.plot(x_new, m*x_new + b, color='red')
     plt.title(f'49C vs PA.   Slope = {round(m,2)},   Temperature Range = {start}-{end}')
     plt.xlabel('49C ppbv', fontsize=14)
     plt.ylabel('PA ppbv', fontsize=14)
     plt.show()
-
+#Reads data from the sheet and sorts as it adds
 df = pd.read_csv('TempBins_01.csv')
 sensorData = list()
 readData = list()
@@ -171,7 +171,7 @@ for i in range (1, numOfValidReadings):
 print('100%')
 workbook.close()
 
-#Loop to check plots
+#User controlled loop to target temperature ranges
 cont = 'c'
 while(cont != 'q' and cont != 'Q'):
     print('Enter a temperature range from -3.8 to 47.7')
